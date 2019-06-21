@@ -1,0 +1,1 @@
+React exercise - first app evo2 - as for now it uses its own classes: https://grzegorz-turek.github.io/react-firstapp-evo2/
