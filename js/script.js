@@ -1,72 +1,89 @@
 'use strict';
 (function(){
 
-    var GalleryItem = React.createClass({
-        propTypes: {
-            image: React.PropTypes.object.isRequired,
+    var movieSet = [
+        {
+            id: 1,
+            ttl: 'Das Boot',
+            desc: 'Very long movie (ca. 4 hrs) about German submarine during IIWW',
+            poster: 'https://m.media-amazon.com/images/M/MV5BNGRmOWY0MGUtNTVhMy00NzRlLTljNDAtNTBiNTRlODgxNmY2XkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_.jpg'
         },
+        {
+            id: 2,
+            ttl: 'Terminator',
+            desc: 'The movie about two humanoids fighting about the futer of human raca. Career jump for Arnold Schwarzenegger',
+            poster: 'https://m.media-amazon.com/images/M/MV5BYTViNzMxZjEtZGEwNy00MDNiLWIzNGQtZDY2MjQ1OWViZjFmXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,666,1000_AL_.jpg'
+        },
+        {
+            id: 3,
+            ttl: 'Twin Peaks (TV series)',
+            desc: 'The portrait of north welathy states small towns societies shown on a patter of mysterius and brutal murder of a youn girl',
+            poster: 'https://m.media-amazon.com/images/M/MV5BMTExNzk2NjcxNTNeQTJeQWpwZ15BbWU4MDcxOTczOTIx._V1_SY1000_CR0,0,781,1000_AL_.jpg'
+        },
+        {
+            id: 4,
+            ttl: 'Platoon',
+            desc: 'One of the major anti-war movies illustrating high-level of degenration hitting human minds',
+            poster: 'https://m.media-amazon.com/images/M/MV5BM2Y1NTQyNWYtNDViNy00ZWRhLTk3MTMtOTI3ZGQ5MDFiNWM4XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SY1000_CR0,0,646,1000_AL_.jpg'
+        }
+    ];
 
-        render: function() {
+    var MoviesList = React.createClass({
+        render: function () {
+            var listOfMovies = movieSet.map(function (movie) {
+                return React.createElement(Movie, {key: movie.id, movie: movie});
+            });
             return (
                 React.createElement('div', {},
-                    React.createElement('h2', {}, this.props.image.name),
-                    React.createElement('img', {src: this.props.image.src})
+                    React.createElement('h1', {}, 'Lista filmów'),
+                    React.createElement('div', {}, listOfMovies))
+            );
+        }
+    });
+
+    var Movie = React.createClass({
+        propTypes: {
+            movie: React.PropTypes.object.isRequired,
+        },
+        render: function () {
+            return (
+                React.createElement('div', {},
+                    React.createElement(MovieTitle, {title: this.props.movie.ttl}),
+                    React.createElement(MovieDescription, {description: this.props.movie.desc}),
+                    React.createElement(MovieImg, {img: this.props.movie.poster})
                 )
             )
         },
     });
 
-    var imagesSet = {
-        name: 'Kotek',
-        src: 'http://imgur.com/n8OYCzR.png'
-    };
+    var MovieTitle = React.createClass({
+        propTypes: {
+            title: React.PropTypes.string.isRequired,
+        },
+        render: function () {
+            return (React.createElement('h2', {}, this.props.title))
+        },
+    });
 
-    var element = React.createElement(GalleryItem, {image: imagesSet});
-    ReactDOM.render(element, document.getElementById('app'));
+    var MovieDescription = React.createClass({
+        propTypes: {
+            description: React.PropTypes.string.isRequired,
+        },
+        render: function () {
+            return (React.createElement('p', {}, this.props.description))
+        },
+    });
 
-    /*
-    var movies = [
-        {
-            id: 1,
-            title: 'Das Boot',
-            desc: 'Very long movie (ca. 4 hrs) about German submarine during IIWW',
-            poster: '../images/dasboot.jpg'
+    var MovieImg = React.createClass({
+        propTypes: {
+            img: React.PropTypes.string.isRequired,
         },
-        {
-            id: 2,
-            title: 'Terminator',
-            desc: 'The movie about two humanoids fighting about the futer of human raca. Career jump for Arnold Schwarzenegger',
-            poster: '../images/terminator.jpg'
-        },
-        {
-            id: 3,
-            title: 'Twin Peaks (TV series)',
-            desc: 'The portrait of north welathy states small towns societies shown on a patter of mysterius and brutal murder of a youn girl',
-            poster: '../images/twinpeaks.jpg'
-        },
-        {
-            id: 4,
-            title: 'Platoon',
-            desc: 'One of the major anti-war movies illustrating high-level of degenration hitting human minds',
-            poster: '../images/platoon.jpg'
+        render: function () {
+            return (React.createElement('img', {src: this.props.img, alt:'movie poster', width:'200'}))
         }
-    ];
+    });
 
-    var moviesElements = movies.map(function(movie) {
-        return React.createElement('li', {key: movie.id},
-            React.createElement('h2', {}, movie.title),
-            React.createElement('p', {}, movie.desc),
-            React.createElement('img', {src:movie.poster, alt:'movie poster', width:'200'})
-          );
-      });
-
-    var element =
-        React.createElement('div', {},
-            React.createElement('h1', {}, 'Lista filmów'),
-            React.createElement('ul', {}, moviesElements)
-        );
-
-    ReactDOM.render(element, document.getElementById('app'));
-    */
+    var list = React.createElement(MoviesList);
+    ReactDOM.render(list, document.getElementById('app'));
 
 })();
